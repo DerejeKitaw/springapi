@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.dkitaw.springapi.SpringApplicationContext;
 import com.dkitaw.springapi.service.UserService;
 import com.dkitaw.springapi.shared.dto.UserDto;
 import com.dkitaw.springapi.ui.model.request.UserLoginRequestModel;
@@ -65,7 +66,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
                 .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.TOKEN_SECRET )
                 .compact();
-        
+        UserService userService = (UserService)SpringApplicationContext.getBean("userServiceImpl");
+        UserDto userDto = userService.getUser(userName);
         res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
+        res.addHeader("userId", userDto.getUserId());
     } 
 }
