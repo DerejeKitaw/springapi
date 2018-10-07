@@ -2,6 +2,8 @@ package com.dkitaw.springapi.service;
 
 import com.dkitaw.springapi.shared.dto.UserDto;
 
-public interface UserService {
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+public interface UserService  extends UserDetailsService{
 UserDto createUser(UserDto user);
 }

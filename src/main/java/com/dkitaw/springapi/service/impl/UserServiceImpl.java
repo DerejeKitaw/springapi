@@ -5,9 +5,11 @@ import com.dkitaw.springapi.io.entity.repository.UserRepository;
 import com.dkitaw.springapi.service.UserService;
 import com.dkitaw.springapi.shared.Utils;
 import com.dkitaw.springapi.shared.dto.UserDto;
-
+import org.springframework.security.core.userdetails.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,4 +45,11 @@ public class UserServiceImpl implements UserService {
 
     return returnValue;
   }
+
+  @Override
+  public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    UserEntity userEntity = userRepository.findByEmail(email);
+    if(userEntity == null) throw new UsernameNotFoundException(email);
+    return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
+}
 }
