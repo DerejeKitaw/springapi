@@ -1,5 +1,7 @@
 package com.dkitaw.springapi.service.impl;
 
+import java.util.ArrayList;
+
 import com.dkitaw.springapi.io.entity.UserEntity;
 import com.dkitaw.springapi.io.entity.repository.UserRepository;
 import com.dkitaw.springapi.service.UserService;
