@@ -1,5 +1,7 @@
 package com.dkitaw.springapi;
 
+import com.dkitaw.springapi.security.AppProperties;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -21,4 +23,9 @@ public class DemoApplication {
 	public SpringApplicationContext springApplicationContext(){
 		return new SpringApplicationContext();
 	}
+	@Bean(name="AppProperties")
+	public AppProperties getAppProperties(){
+		return new AppProperties();
+	}
+
 }
