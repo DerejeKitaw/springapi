@@ -10,5 +10,6 @@ public interface UserRepository extends CrudRepository<UserEntity, Long>{
 
   // If email found do not record
   UserEntity findByEmail(String email);
+  UserEntity findByUserId(String userId);
 
 }
