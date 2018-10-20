@@ -1,5 +1,8 @@
 package com.dkitaw.springapi.ui.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.dkitaw.springapi.exceptions.UserServiceException;
 import com.dkitaw.springapi.service.UserService;
 import com.dkitaw.springapi.shared.dto.UserDto;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -38,6 +42,18 @@ public class UserController {
 
     return returnValue;
   }
+
+  @GetMapping
+  public List<UserRest>getUsers(@RequestParam(value="page",defaultValue="0") int page, @RequestParam(value="limit", defaultValue="25") int limit){
+    List<UserRest> returnValue = new ArrayList<>();
+    List<UserDto> users = userService.getUsers(page,limit);
+for (UserDto userDto: users){
+  UserRest userModel = new UserRest();
+  BeanUtils.copyProperties(userDto, userModel);
+  returnValue.add(userModel);
+}
+    return returnValue;
+   }
 
   @PostMapping
   public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {

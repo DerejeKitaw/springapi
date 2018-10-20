@@ -1,5 +1,7 @@
 package com.dkitaw.springapi.service;
 
+import java.util.List;
+
 import com.dkitaw.springapi.shared.dto.UserDto;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,4 +12,5 @@ UserDto getUser(String email);
 UserDto getUserByUserId(String userId);
 UserDto updateUser(String id, UserDto userDto);
 void deleteUser(String userId);
+List<UserDto> getUsers(int page, int limit);
 }
