@@ -1,8 +1,10 @@
 package com.dkitaw.springapi.ui.controller;
 
+import com.dkitaw.springapi.exceptions.UserServiceException;
 import com.dkitaw.springapi.service.UserService;
 import com.dkitaw.springapi.shared.dto.UserDto;
 import com.dkitaw.springapi.ui.model.request.UserDetailsRequestModel;
+import com.dkitaw.springapi.ui.model.response.ErrorMessages;
 import com.dkitaw.springapi.ui.model.response.UserRest;
 
 import org.springframework.beans.BeanUtils;
@@ -35,9 +37,9 @@ public class UserController {
     return returnValue;
   }
   @PostMapping
-  public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails){
+  public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception{
     UserRest returnValue = new UserRest();
-
+    if(userDetails.getFirstName().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
     UserDto userDto = new UserDto();
     BeanUtils.copyProperties(userDetails, userDto);
 

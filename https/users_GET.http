@@ -1,1 +1,14 @@
-http://localhost:8080/users
+
+POST http://localhost:8080/users/login HTTP/1.1
+content-type: application/json
+
+{
+    "email":"a1@gmail.com",
+    "password":"1234"
+}
+
+
+###
+http://localhost:8080/users/dRgou42caESJQE5yIqubC4Ro2ccKzD
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhMUBnbWFpbC5jb20iLCJleHAiOjE1NDA5MzIwNzh9.3bxqD30IEOYAoRJe5Q2vtyS7Yf3CgvwApOeqfEhgzBqC8Yy3adgzHdjWYZmaBbioJIob2qJe_D17c39twxGW0w
