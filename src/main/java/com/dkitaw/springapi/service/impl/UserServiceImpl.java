@@ -2,11 +2,14 @@ package com.dkitaw.springapi.service.impl;
 
 import java.util.ArrayList;
 
+import com.dkitaw.springapi.exceptions.UserServiceException;
 import com.dkitaw.springapi.io.entity.UserEntity;
 import com.dkitaw.springapi.io.entity.repository.UserRepository;
 import com.dkitaw.springapi.service.UserService;
 import com.dkitaw.springapi.shared.Utils;
 import com.dkitaw.springapi.shared.dto.UserDto;
+import com.dkitaw.springapi.ui.model.response.ErrorMessages;
+
 import org.springframework.security.core.userdetails.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,14 +54,16 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     UserEntity userEntity = userRepository.findByEmail(email);
-    if(userEntity == null) throw new UsernameNotFoundException(email);
+    if (userEntity == null)
+      throw new UsernameNotFoundException(email);
     return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
-}
+  }
 
   @Override
   public UserDto getUser(String email) {
     UserEntity userEntity = userRepository.findByEmail(email);
-    if(userEntity == null) throw new UsernameNotFoundException(email);
+    if (userEntity == null)
+      throw new UsernameNotFoundException(email);
     UserDto returnValue = new UserDto();
     BeanUtils.copyProperties(userEntity, returnValue);
     return returnValue;
@@ -67,12 +72,29 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserDto getUserByUserId(String userId) {
     UserDto returnValue = new UserDto();
-    UserEntity userEntity =userRepository.findByUserId(userId);
+    UserEntity userEntity = userRepository.findByUserId(userId);
 
-    if(userEntity == null) throw new UsernameNotFoundException(userId);
+    if (userEntity == null)
+      throw new UsernameNotFoundException(userId);
 
     BeanUtils.copyProperties(userEntity, returnValue);
 
+    return returnValue;
+  }
+
+  @Override
+  public UserDto updateUser(String userId, UserDto user) {
+    UserDto returnValue = new UserDto();
+    UserEntity userEntity = userRepository.findByUserId(userId);
+
+    if (userEntity == null) {
+      throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+    }
+    userEntity.setFirstName(user.getFirstName());
+    userEntity.setLastName(user.getLastName());
+
+    UserEntity updatedUserDetails = userRepository.save(userEntity);
+    BeanUtils.copyProperties(updatedUserDetails, returnValue);
     return returnValue;
   }
 }
