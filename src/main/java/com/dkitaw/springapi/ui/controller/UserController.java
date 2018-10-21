@@ -20,6 +20,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +41,9 @@ public class UserController {
   UserService userService;
   @Autowired
   AddressService addressService;
-
+  @Autowired
+  AddressService addressesService;
+  
   @GetMapping(path = "/{id}")
   public UserRest getUser(@PathVariable String id) {
     UserRest returnValue = new UserRest();
@@ -77,6 +80,17 @@ public class UserController {
     }
     return returnValue;
   }
+
+@GetMapping(path = "/{userId}/addresses/{addressId}")
+public AddressesRest getUserAddress(@PathVariable String userId, @PathVariable String addressId) {
+
+    AddressDto addressesDto = addressService.getAddress(addressId);
+
+  ModelMapper modelMapper = new ModelMapper();
+
+
+  return modelMapper.map(addressesDto, AddressesRest.class);
+}
 
   @PostMapping
   public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
