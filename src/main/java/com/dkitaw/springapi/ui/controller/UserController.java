@@ -1,5 +1,6 @@
 package com.dkitaw.springapi.ui.controller;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,11 +60,14 @@ public class UserController {
       @RequestParam(value = "limit", defaultValue = "25") int limit) {
     List<UserRest> returnValue = new ArrayList<>();
     List<UserDto> users = userService.getUsers(page, limit);
-    for (UserDto userDto : users) {
-      UserRest userModel = new UserRest();
-      BeanUtils.copyProperties(userDto, userModel);
-      returnValue.add(userModel);
-    }
+    Type listType = new TypeToken<List<UserRest>>() {
+		}.getType();
+		returnValue = new ModelMapper().map(users, listType);
+    // for (UserDto userDto : users) {
+    //   UserRest userModel = new UserRest();
+    //   BeanUtils.copyProperties(userDto, userModel);
+    //   returnValue.add(userModel);
+    // }
     return returnValue;
   }
 // http://localhost:8080/users/yXr7jT7UOCSIzpLwJiz3rNmFE2YSbB(userrId)/addresses
@@ -92,7 +95,7 @@ public AddressesRest getUserAddress(@PathVariable String userId, @PathVariable S
   return modelMapper.map(addressesDto, AddressesRest.class);
 }
 
-  @PostMapping
+  @PostMapping(path="/signup")
   public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
     UserRest returnValue = new UserRest();
 
