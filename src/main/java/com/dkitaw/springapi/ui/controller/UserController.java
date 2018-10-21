@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dkitaw.springapi.exceptions.UserServiceException;
+import com.dkitaw.springapi.service.AddressService;
 import com.dkitaw.springapi.service.UserService;
+import com.dkitaw.springapi.shared.dto.AddressDto;
 import com.dkitaw.springapi.shared.dto.UserDto;
 import com.dkitaw.springapi.ui.model.request.UserDetailsRequestModel;
+import com.dkitaw.springapi.ui.model.response.AddressesRest;
 import com.dkitaw.springapi.ui.model.response.ErrorMessages;
 import com.dkitaw.springapi.ui.model.response.OperationStatusModel;
 import com.dkitaw.springapi.ui.model.response.RequestOperationName;
@@ -14,6 +17,7 @@ import com.dkitaw.springapi.ui.model.response.RequestOperationStatus;
 import com.dkitaw.springapi.ui.model.response.UserRest;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,6 +38,8 @@ public class UserController {
 
   @Autowired
   UserService userService;
+  @Autowired
+  AddressService addressService;
 
   @GetMapping(path = "/{id}")
   public UserRest getUser(@PathVariable String id) {
@@ -55,6 +61,19 @@ public class UserController {
       UserRest userModel = new UserRest();
       BeanUtils.copyProperties(userDto, userModel);
       returnValue.add(userModel);
+    }
+    return returnValue;
+  }
+// http://localhost:8080/users/yXr7jT7UOCSIzpLwJiz3rNmFE2YSbB(userrId)/addresses
+  @GetMapping(path="{id}/addresses")
+  public List<AddressesRest> getUserAddresses(@PathVariable String id){
+    
+    List<AddressesRest> returnValue = new ArrayList<>();  
+    List<AddressDto> addressesDto = addressService.getAddresses(id);
+
+    if(addressesDto !=null && !addressesDto.isEmpty()){
+      java.lang.reflect.Type listType = new TypeToken<List<AddressesRest>>() {}.getType();
+      returnValue = new ModelMapper().map(addressesDto, listType);
     }
     return returnValue;
   }

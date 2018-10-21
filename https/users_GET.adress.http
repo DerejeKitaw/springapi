@@ -1,0 +1,17 @@
+POST http://localhost:8080/users/login HTTP/1.1
+content-type: application/json
+
+{
+    "email":"tes2@gmail.com",
+    "password":"1239"
+}
+
+
+###
+http://localhost:8080/users/yXr7jT7UOCSIzpLwJiz3rNmFE2YSbB
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXMyQGdtYWlsLmNvbSIsImV4cCI6MTU0MDk1ODc1M30.9mynmzCmkdnDo292VB8udhvwmH3guOXWPoGbTxj9YuF5YiuLFLsjz5GpwI6wWYrs3723r2vNtr-rd9Vd26c2PQ
+###
+http://localhost:8080/users/yXr7jT7UOCSIzpLwJiz3rNmFE2YSbB/addresses
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXMyQGdtYWlsLmNvbSIsImV4cCI6MTU0MDk1ODc1M30.9mynmzCmkdnDo292VB8udhvwmH3guOXWPoGbTxj9YuF5YiuLFLsjz5GpwI6wWYrs3723r2vNtr-rd9Vd26c2PQ
