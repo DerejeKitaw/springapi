@@ -4,7 +4,22 @@ content-type: application/json
 {
     "firstName":"D",
     "lastName":"Kitaw",
-    "email":"test5@gmail.com",
-    "password":"1239"    
+    "email":"tes3@gmail.com",
+    "password":"1239",
+    "addresses":[
+        {
+            "city":"Silver Spring",
+            "county":"USA",
+            "streetName":"123 Street name",
+            "postalCode":"ABDC",
+            "type":"billing"
+        },
+        {
+            "city":"Silver Spring",
+            "county":"USA",
+            "streetName":"123 Street name",
+            "postalCode":"ABDC",
+            "type":"shipping"
+        }
+    ]   
 }
-

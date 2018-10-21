@@ -2,7 +2,6 @@ package com.dkitaw.springapi.security;
 
 import com.dkitaw.springapi.SpringApplicationContext;
 
-import org.springframework.boot.SpringApplication;
 
 public class SecurityConstants {
     public static final long EXPIRATION_TIME = 864000000; // 10 days
