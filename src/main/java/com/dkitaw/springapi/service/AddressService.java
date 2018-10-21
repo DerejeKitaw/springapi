@@ -5,6 +5,8 @@ import java.util.List;
 import com.dkitaw.springapi.shared.dto.AddressDto;
 
 public interface AddressService {
-List<AddressDto> getAddresses(String userId);
-AddressDto getAddress(String addressId);
+
+  List<AddressDto> getAddresses(String userId);
+
+  AddressDto getAddress(String addressId);
 }

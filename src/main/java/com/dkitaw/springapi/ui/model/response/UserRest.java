@@ -3,7 +3,6 @@ package com.dkitaw.springapi.ui.model.response;
 import java.util.List;
 
 public class UserRest {
-
 	private String userId;
 	private String firstName;
 	private String lastName;
@@ -13,7 +12,6 @@ public class UserRest {
 	public String getUserId() {
 		return userId;
 	}
-
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
@@ -38,7 +36,6 @@ public class UserRest {
 	public List<AddressesRest> getAddresses() {
 		return addresses;
 	}
-
 	public void setAddresses(List<AddressesRest> addresses) {
 		this.addresses = addresses;
 	}

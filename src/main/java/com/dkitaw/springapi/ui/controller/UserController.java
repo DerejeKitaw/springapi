@@ -36,79 +36,78 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("users")
 @CrossOrigin(origins = { "http://localhost:3000" })
 public class UserController {
-
   @Autowired
   UserService userService;
   @Autowired
   AddressService addressService;
   @Autowired
   AddressService addressesService;
-  
+
   @GetMapping(path = "/{id}")
   public UserRest getUser(@PathVariable String id) {
+
     UserRest returnValue = new UserRest();
 
     UserDto userDto = userService.getUserByUserId(id);
-    // BeanUtils.copyProperties(userDto, returnValue);
+
     ModelMapper modelMapper = new ModelMapper();
     returnValue = modelMapper.map(userDto, UserRest.class);
+
     return returnValue;
   }
 
+  // http://localhost:8080/users?page=0&limit=5
   @GetMapping
   public List<UserRest> getUsers(@RequestParam(value = "page", defaultValue = "0") int page,
       @RequestParam(value = "limit", defaultValue = "25") int limit) {
+
     List<UserRest> returnValue = new ArrayList<>();
     List<UserDto> users = userService.getUsers(page, limit);
+
     Type listType = new TypeToken<List<UserRest>>() {
-		}.getType();
-		returnValue = new ModelMapper().map(users, listType);
-    // for (UserDto userDto : users) {
-    //   UserRest userModel = new UserRest();
-    //   BeanUtils.copyProperties(userDto, userModel);
-    //   returnValue.add(userModel);
-    // }
+    }.getType();
+    returnValue = new ModelMapper().map(users, listType);
+
     return returnValue;
   }
-// http://localhost:8080/users/yXr7jT7UOCSIzpLwJiz3rNmFE2YSbB(userrId)/addresses
-  @GetMapping(path="{id}/addresses")
-  public List<AddressesRest> getUserAddresses(@PathVariable String id){
-    
-    List<AddressesRest> returnValue = new ArrayList<>();  
+
+  // http://localhost:8080/users/yXr7jT7UOCSIzpLwJiz3rNmFE2YSbB(userrId)/addresses
+  @GetMapping(path = "{id}/addresses")
+  public List<AddressesRest> getUserAddresses(@PathVariable String id) {
+
+    List<AddressesRest> returnValue = new ArrayList<>();
     List<AddressDto> addressesDto = addressService.getAddresses(id);
 
-    if(addressesDto !=null && !addressesDto.isEmpty()){
-      java.lang.reflect.Type listType = new TypeToken<List<AddressesRest>>() {}.getType();
+    if (addressesDto != null && !addressesDto.isEmpty()) {
+      java.lang.reflect.Type listType = new TypeToken<List<AddressesRest>>() {
+      }.getType();
       returnValue = new ModelMapper().map(addressesDto, listType);
     }
+
     return returnValue;
   }
 
-@GetMapping(path = "/{userId}/addresses/{addressId}")
-public AddressesRest getUserAddress(@PathVariable String userId, @PathVariable String addressId) {
+  @GetMapping(path = "/{userId}/addresses/{addressId}")
+  public AddressesRest getUserAddress(@PathVariable String userId, @PathVariable String addressId) {
 
     AddressDto addressesDto = addressService.getAddress(addressId);
 
-  ModelMapper modelMapper = new ModelMapper();
+    ModelMapper modelMapper = new ModelMapper();
 
+    return modelMapper.map(addressesDto, AddressesRest.class);
+  }
 
-  return modelMapper.map(addressesDto, AddressesRest.class);
-}
-
-  @PostMapping(path="/signup")
+  @PostMapping(path = "/signup")
   public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
+    
     UserRest returnValue = new UserRest();
 
     if (userDetails.getFirstName().isEmpty())
       throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 
-    // UserDto userDto = new UserDto();
-    // BeanUtils.copyProperties(userDetails, userDto);
     ModelMapper modelMapper = new ModelMapper();
     UserDto userDto = modelMapper.map(userDetails, UserDto.class);
 
-    // UserDto createdUser = userService.createUser(userDto);
-    // BeanUtils.copyProperties(createdUser, returnValue);
     UserDto createdUser = userService.createUser(userDto);
     returnValue = modelMapper.map(createdUser, UserRest.class);
 

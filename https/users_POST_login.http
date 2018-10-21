@@ -6,3 +6,11 @@ content-type: application/json
     "password":"1239"
 }
 
+###
+POST http://localhost:8080/users/signup HTTP/1.1
+content-type: application/json
+
+{
+    "email":"tes2@gmail.com",
+    "password":"1239"
+}

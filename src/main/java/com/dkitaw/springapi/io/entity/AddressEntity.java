@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.dkitaw.springapi.shared.dto.UserDto;
 
 @Entity(name="addresses")
 public class AddressEntity implements Serializable{

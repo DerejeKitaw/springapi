@@ -6,8 +6,7 @@ import java.util.List;
 
 // Dto=User data transfer object
 public class UserDto implements Serializable {
-
-  private static final long serialVersionUID = 5482688044916353208L;
+    private static final long serialVersionUID = 5482688044916353208L;
     private long id;
     private String userId;
     private String firstName;
@@ -18,8 +17,6 @@ public class UserDto implements Serializable {
     private String emailVerificationToken;
     private Boolean emailVerificationStatus=false;
     private List<AddressDto> addresses;
-
-  
 
     public long getId() {
       return id;
