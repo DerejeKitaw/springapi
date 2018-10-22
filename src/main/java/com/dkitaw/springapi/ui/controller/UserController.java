@@ -117,6 +117,7 @@ public class UserController {
 
   @PutMapping(path = "/{id}")
   public UserRest updateUser(@PathVariable String id, @RequestBody UserDetailsRequestModel userDetails) {
+    
     UserRest returnValue = new UserRest();
     UserDto userDto = new UserDto();
     BeanUtils.copyProperties(userDetails, userDto);
@@ -135,6 +136,7 @@ public class UserController {
     // Delete user
     userService.deleteUser(id);
     returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
+    
     return returnValue;
   }
 

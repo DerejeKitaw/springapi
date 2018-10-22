@@ -1,0 +1,20 @@
+POST http://localhost:8080/projects/create HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXM2QGdtYWlsLmNvbSIsImV4cCI6MTU0MTA0NzczM30.yiFQLyEArkKEuuzNa7gWJ7IoHFh2-FpAOXT1liN9pcvAHiI5DuMDrBFlE14dRkaXUoj6W7PkPX2hbNTnJ79_cg
+
+{
+  "projectNumber": 2443,
+    "firstName": "Judith",
+    "lastName": "Schmidt",
+    "projectName": "Judith Schmidt",
+    "generatedBy": "dereje",
+    "salesRepresentativeName": "Eric"
+}
+###
+POST http://localhost:8080/users/login HTTP/1.1
+content-type: application/json
+
+{
+    "email":"tes6@gmail.com",
+    "password":"1239"
+}
